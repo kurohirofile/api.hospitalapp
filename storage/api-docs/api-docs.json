@@ -1,0 +1,691 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dokumentasi REST API Rumah Sakit",
+        "description": "Dokumentasi API v1.0.0",
+        "contact": {
+            "email": "prasdimasetyo@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Membuat User baru",
+                "operationId": "ed42f392010c301892e640067141676e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "name": "John",
+                                "email": "john@example.com",
+                                "password": "secret"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Registrasi berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registrasi berhasil"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validasi gagal",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login Pengguna",
+                "operationId": "8cb7742ae98d0990acb2907c4e00bf24",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "email": "john@example.com",
+                                "password": "secret"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "token": "generated_token_here"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "error": "Email atau password salah"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Informasi Pengguna Terotentikasi",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "d80381cd6c0b37d694845cb9058dbe5e",
+                "responses": {
+                    "200": {
+                        "description": "Informasi pengguna berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "id": 1,
+                                    "name": "John Doe",
+                                    "email": "john@example.com"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "error": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Keluar dari Sesi Pengguna Terotentikasi",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "0d29c740dc06d77602af8095bf4654cc",
+                "responses": {
+                    "200": {
+                        "description": "Logout berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Berhasil keluar dari sesi"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Memperbarui Token Autentikasi",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "f6c9683ed975ace7d035a09e6e2a9332",
+                "responses": {
+                    "200": {
+                        "description": "Token autentikasi berhasil diperbarui",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "email": "john@example.com",
+                                    "password": "secret"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "error": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/patient": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Mengambil daftar semua pasien",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "051dba4eed49b0cf2377a73e66aa50d4",
+                "responses": {
+                    "200": {
+                        "description": "Daftar pasien berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": true,
+                                    "patients": [
+                                        {
+                                            "id": 1,
+                                            "name": "John Doe"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "Jane Smith"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Membuat data pasien baru",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "bd276a8576aab17838c1ae2d423f333d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "name": "John Doe",
+                                "email": "john.doe@example.com",
+                                "phone": "1234567890",
+                                "age": 30,
+                                "gender": "Male",
+                                "sickness": "Flu"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data pasien berhasil dibuat",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": true,
+                                    "msg": "Berhasil Dibuat"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validasi gagal",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "fail",
+                                    "message": [
+                                        "The name field is required.",
+                                        "The email field is required."
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Gagal membuat data pasien",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Tidak dapat membuat data pasien"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/patient/{id}": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Menampilkan detail pasien berdasarkan ID",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "3e4f6fe1198e4341e2095d34750020b9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID dari pasien yang ingin ditampilkan",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data pasien berhasil ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": true,
+                                    "patient": {
+                                        "id": 1,
+                                        "name": "John Doe",
+                                        "email": "john@example.com",
+                                        "phone": "1234567890",
+                                        "age": 30,
+                                        "gender": "male",
+                                        "sickness": "Flu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pasien tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Pasien tidak ditemukan"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Gagal menampilkan data pasien",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Tidak dapat menampilkan data pasien"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Memperbarui data pasien berdasarkan ID",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "9c6987fcff28b4c6d19e755da59e7293",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID dari pasien yang ingin diperbarui",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "name": "John Doe",
+                                "email": "john@example.com",
+                                "phone": "1234567890",
+                                "age": 30,
+                                "gender": "male",
+                                "sickness": "Flu"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data pasien berhasil diperbarui",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": true,
+                                    "message": "Pasien berhasil diperbarui"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pasien tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Pasien tidak ditemukan"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Gagal memperbarui data pasien",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Tidak dapat memperbarui data pasien"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Menghapus data pasien berdasarkan ID",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "6d0d4ab9f1b092141ed19c02b557553f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID dari pasien yang ingin dihapus",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data pasien berhasil dihapus",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": true,
+                                    "message": "Pasien berhasil dihapus"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pasien tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Pasien tidak ditemukan"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Gagal menghapus data pasien",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Tidak dapat menghapus data pasien"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/fileupload": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Mengambil daftar semua file yang diunggah",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "5f14a8ac0a5e99a5d9a43ef1c9607a9b",
+                "responses": {
+                    "200": {
+                        "description": "Daftar file berhasil diambil",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "data": {
+                                        "files": [
+                                            {
+                                                "id": 1,
+                                                "name": "file1.txt",
+                                                "size": 1024,
+                                                "created_at": "2024-06-28 12:00:00",
+                                                "updated_at": "2024-06-28 12:00:00"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "name": "file2.pdf",
+                                                "size": 2048,
+                                                "created_at": "2024-06-28 13:00:00",
+                                                "updated_at": "2024-06-28 13:00:00"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Gagal mengambil daftar file",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Gagal mengambil daftar file"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Mengunggah file dan menyimpan data terkait",
+                "description": "Endpoint ini memerlukan autentikasi dengan menggunakan Bearer Token. Harap sertakan token bearer dalam header 'Authorization' saat melakukan permintaan.",
+                "operationId": "84a60762903a6beb4088b1def0da834c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "File yang akan diunggah",
+                                        "type": "file"
+                                    },
+                                    "name": {
+                                        "description": "Nama terkait file (opsional)",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Deskripsi terkait file (opsional)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "File berhasil diunggah dan data berhasil disimpan",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": true,
+                                    "msg": "Berhasil dibuat"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validasi gagal",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "fail",
+                                    "message": [
+                                        "The file field is required."
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Gagal membuat file",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Gagal membuat file"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "User",
+            "description": "API Endpoints for User"
+        },
+        {
+            "name": "Patients",
+            "description": "API Endpoints for Pasien"
+        }
+    ]
+}
